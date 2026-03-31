@@ -18,4 +18,18 @@ public class BancoTest {
 
         assertEquals("Préstamo registrado con éxito", resultado);
     }
+
+    @Test
+    void testPrestamoExitoso() {
+        ServicioCredito mockServicio = Mockito.mock(ServicioCredito.class);
+        PrestamoBancario banco = new PrestamoBancario(mockServicio);
+
+        when(mockServicio.obtenerScore("87654321")).thenReturn(750);
+        when(mockServicio.tieneDeudasPendientes("87654321")).thenReturn(false);
+        when(mockServicio.obtenerIngresoMensual("87654321")).thenReturn(5000.0);
+
+        String resultado = banco.registrarPrestamo("P-002", "87654321", 10000, 24);
+
+        assertEquals("Préstamo registrado con éxito", resultado);
+    }
 }
